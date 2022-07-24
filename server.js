@@ -11,7 +11,7 @@ app.use(express.json());
 const db = mysql.createConnection(
     {
         host: 'localhost',
-        // Your MySQL username,
+        // Your MySQL username - default is root
         user: 'root',
         // Your MySQL password
         password: '65f1OQr&dlVY',
@@ -26,9 +26,39 @@ Query method runs the SQL query and executes the callback with all the resulting
 the callback function captures the responses from the query in two variables: the err, which is the error response, and rows, which is the database 
 query response. If there are no errors in the SQL query, the err value is null. This method is the key component that allows SQL commands to be written 
 in a Node.js application.*/
-db.query(`SELECT * FROM candidates`, (err, rows) => {
-    console.log(rows);
+// db.query(`SELECT * FROM candidates`, (err, rows) => {
+//     console.log(rows);
+// });
+
+// GET a single candidate
+// db.query(`SELECT * FROM candidates WHERE id = 1`, (err, row) => {
+//     if (err) {
+//         console.log(err);
+//     }
+//     console.log(row);
+// });
+
+// Delete a candidate
+// db.query(`DELETE FROM candidates WHERE ID = ?`, 1, (err, result) => {
+//     if (err) {
+//         console.log(err);
+//     }
+//     console.log(result);
+// })
+
+// Create a candidate
+const sql = `INSERT INTO candidates (id, first_name, last_name, industry_connected) 
+            VALUES (?,?,?,?)`;
+
+const params = [1, 'Ronald', 'Firbank', 1];
+
+db.query(sql, params, (err, result) => {
+    if (err) {
+        console.log(err);
+    }
+    console.log(result);
 });
+    
 
 // Function to create a GET test route
 // app.get('/', (req, res) => {
